@@ -4,9 +4,11 @@ SRCS =	main.c\
 
 CC = cc
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror DEBUG=1
 
-LIBS = -L /usr/local/lib -lmlx -lXext -lX11
+LINK = -ldl -lglfw -pthread -lm
+
+LIBS = -L /usr/local/lib libmlx.a -lXext -lX11
 
 all:
-	$(CC) $(CFLAGS) $(SRCS) $(LIBS) -o $(NAME)
+	$(CC) $(CFLAGS) $(SRCS) $(LIBS) $(LINK) -o $(NAME)
