@@ -9,4 +9,17 @@ typedef struct mlx
     int     height;
 } mlx_t;
 
+typedef struct s_img
+{
+	mlx_t	win;
+	void	*img_ptr;
+	char	*addr;
+	int		h;
+	int		w;
+	int		bpp;
+	int		endian;
+	int		line_len;
+}		t_img;
+
+
 #endif
