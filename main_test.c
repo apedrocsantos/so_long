@@ -170,11 +170,11 @@ int	main()
   printf("OK\n");
   sleep(2);
 
-  // printf(" => String ...");
-  // mlx_string_put(mlx,win1,5,WIN1_SY/2,0xFF99FF,"String output");
-  // mlx_string_put(mlx,win1,15,WIN1_SY/2+20,0x00FFFF,"MinilibX test");
-  // printf("OK\n");
-  // sleep(2);
+  printf(" => String ...");
+  mlx_string_put(mlx,win1,5,WIN1_SY/2,0xFF99FF,"String output");
+  mlx_string_put(mlx,win1,15,WIN1_SY/2+20,0x00FFFF,"MinilibX test");
+  printf("OK\n");
+  sleep(2);
 
   printf(" => Xpm from file ...");
   if (!(im2 = mlx_xpm_file_to_image(mlx,"open.xpm",&xpm1_x,&xpm1_y)))

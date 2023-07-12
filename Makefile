@@ -1,6 +1,6 @@
 NAME = so_long
 
-SRCS =	main.c\
+SRCS =	tests.c\
 
 CC = cc
 
@@ -13,7 +13,7 @@ LIBS = -L /usr/local/lib libmlx.a -lXext -lX11
 all: main
 
 main:
-	$(CC) $(CFLAGS) main.c $(LIBS) $(LINK) -o $(NAME)
+	$(CC) $(CFLAGS) $(SRCS) $(LIBS) $(LINK) -o $(NAME)
 
 test:
 	$(CC) $(CFLAGS) main_test.c $(LIBS) $(LINK) -o $(NAME)
