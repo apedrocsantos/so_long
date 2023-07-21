@@ -65,9 +65,6 @@ all: $(NAME)
 $(NAME): $(OBJECTS)
 	ar -crs $(NAME) $(OBJECTS)
 
-$(SOURCES):
-	$(CC) $(CFLAGS) -c $(SOURCES)
-
 re: fclean all
 
 fclean: clean

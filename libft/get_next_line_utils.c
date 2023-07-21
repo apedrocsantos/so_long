@@ -24,7 +24,7 @@ size_t	ft_strlen_gnl(const char *s)
 	{
 		if (s[i] == '\n')
 		{
-			i++;
+			// i++;
 			break ;
 		}
 		i++;
@@ -53,8 +53,8 @@ char	*ft_strjoin_gnl(char const *s1, char const *s2)
 		str[i + j] = s2[j];
 		j++;
 	}
-	if (s2[j] == '\n')
-		str[i + j++] = '\n';
+	// if (s2[j] == '\n')
+	// 	str[i + j++] = '\n';
 	str[i + j] = '\0';
 	free((char *)s1);
 	return (str);

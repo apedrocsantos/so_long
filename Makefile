@@ -19,12 +19,13 @@ LIBS = -L /usr/local/lib libmlx.a -lXext -lX11
 all: $(NAME)
 
 $(NAME): $(SRCS) $(LIB)
-	$(CC) $(CFLAGS) $^ $(INCLUDES) $(LIB) $(LINK) -o $(NAME) -Og
+	$(CC) $(CFLAGS) $^ $(INCLUDES) $(LIB) $(LINK) -o $(NAME) -g
 
 $(LIB):
-	$(MAKE) -C libft
-	mv libft/$(LIB) .
-	$(MAKE) -C libft clean
+	@$(MAKE) -s -C libft
+	@mv libft/$(LIB) .
+	@$(MAKE) -s -C libft clean
+	@echo "libft OK."
 
 clean:
 	rm -f $(NAME)
@@ -34,10 +35,9 @@ fclean:
 
 re: fclean all
 
-test:
-	$(CC) $(CFLAGS) main_test.c $(LIBS) $(LINK) -o $(NAME)
+.SILENT: clean fclean re
 
 .PHONY: all clean fclean re
 
-#test:
-#	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)
+valgrind:
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) test.ber

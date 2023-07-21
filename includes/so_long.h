@@ -9,6 +9,22 @@ typedef struct mlx
     int     height;
 } mlx_t;
 
+typedef struct s_point
+{
+	size_t y;
+	size_t x;
+} t_point;
+
+typedef struct s_map
+{
+	char **tab;
+	int collectibles;
+	int exits;
+	int players;
+	t_point size;
+	t_point start;
+}	t_map;
+
 typedef struct s_img
 {
 	mlx_t	win;
