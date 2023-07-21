@@ -11,8 +11,8 @@ typedef struct mlx
 
 typedef struct s_point
 {
-	size_t y;
-	size_t x;
+	int y;
+	int x;
 } t_point;
 
 typedef struct s_map
@@ -37,5 +37,7 @@ typedef struct s_img
 	int		line_len;
 }		t_img;
 
+void	free_map(t_map *map);
+int	check_ber(char *str);
 
 #endif

@@ -6,43 +6,41 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 08:16:30 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/21 16:24:05 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/07/21 22:25:50 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 #include "../includes/so_long.h"
-#include <stdio.h>
 #include <stdlib.h>
 
-void	flood_fill(char **tab, t_map *map, t_point cur)
+int	flood_fill(char **tab, t_map *map, t_point cur)
 {
-	ft_printf("aaa %c %d - %d %d - %d\n", tab[cur.y][cur.x], cur.y, map->size.y, cur.x, map->size.x);
 	if (cur.y < 0 || cur.y >= map->size.y || cur.x < 0 || cur.x >= map->size.x
-		|| (tab[cur.y][cur.x] == 'F' && tab[cur.y][cur.x] == '1'))
-			return ;
+		|| (tab[cur.y][cur.x] == 'F' || tab[cur.y][cur.x] == '1'))
+		return (0);
 	if (tab[cur.y][cur.x] == 'C')
 		map->collectibles -= 1;
 	else if (tab[cur.y][cur.x] == 'E')
 		map->exits -= 1;
 	map->tab[cur.y][cur.x] = 'F';
-	ft_printf("aaa %c %d %d\n", tab[cur.y][cur.x], cur.y, cur.x);
-	ft_printf("y + 1\n");
 	flood_fill(tab, map, (t_point){cur.y + 1, cur.x});
-	ft_printf("y - 1\n");
 	flood_fill(tab, map, (t_point){cur.y - 1, cur.x});
 	flood_fill(tab, map, (t_point){cur.y, cur.x + 1});
 	flood_fill(tab, map, (t_point){cur.y, cur.x - 1});
+	if (!map->collectibles && !map->exits)
+		return (0);
+	return (1);
 }
 
 int	parse_map(t_map *map)
 {
+	int	i;
+	int	j;
+
 	map->collectibles = 0;
 	map->exits = 0;
 	map->players = 0;
-	int i;
-	int j;
-
 	i = 0;
 	j = 0;
 	while (map->tab[j] && map->tab[j][i])
@@ -57,6 +55,8 @@ int	parse_map(t_map *map)
 			map->start.y = j;
 			map->start.x = i;
 		}
+		else if (map->tab[j][i] != '1' && map->tab[j][i] != '0')
+			return (2);
 		i++;
 		if (!map->tab[j][i])
 		{
@@ -64,17 +64,15 @@ int	parse_map(t_map *map)
 			i = 0;
 		}
 	}
-	ft_printf("E %d, P %d, C %d, S %dy %dx\n", map->exits, map->players, map->collectibles, map->start.y, map->start.x);
-	if (map->exits != 1 || map->players != 1 || map->collectibles < 2)
-		return (-1);
-	flood_fill(map->tab, map, map->start);
-	return (0);
+	if (map->exits != 1 || map->players != 1 || map->collectibles < 1)
+		return (3);
+	return (flood_fill(map->tab, map, map->start));
 }
 
 int	get_map(char *str, t_map *map)
 {
 	int		fd;
-	size_t	i;
+	int		i;
 	char	*line;
 
 	i = 0;
@@ -82,7 +80,7 @@ int	get_map(char *str, t_map *map)
 	fd = open(str, O_RDONLY);
 	line = get_next_line(fd);
 	if (line == NULL)
-		return (-2);
+		return (4);
 	while (line)
 	{
 		map->tab[i++] = ft_strdup(line);
@@ -93,14 +91,15 @@ int	get_map(char *str, t_map *map)
 		if (line[0] != '1' || line[map->size.x - 1] != '1')
 		{
 			free(line);
-			return (-1);
+			return (5);
 		}
 	}
 	close(fd);
 	i = -1;
 	while (++i < map->size.x)
-		if (map->tab[0][i] != '1' || map->tab[map->size.y - 1][i] != '1')
-			return (-1);
+		if (map->tab[0][i] != '1' || map->tab[map->size.y - 1][i] != '1'
+			|| map->size.x == map->size.y)
+			return (6);
 	return (parse_map(map));
 }
 
@@ -113,7 +112,7 @@ int	read_map(char *str, t_map *map)
 	fd = open(str, O_RDONLY);
 	line = get_next_line(fd);
 	if (line == NULL)
-		return (-2);
+		return (7);
 	map->size.x = ft_strlen(line);
 	while (line)
 	{
@@ -122,37 +121,35 @@ int	read_map(char *str, t_map *map)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		if (ft_strlen(line) != map->size.x)
+		if ((int)ft_strlen(line) != map->size.x)
 		{
 			free(line);
-			return (-1);
+			return (8);
 		}
 	}
 	close(fd);
 	return (get_map(str, map));
 }
 
-int	check_ber(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	if (i > 4 && str[i - 4] && strncmp(&str[i - 4], ".ber", 4) == 0)
-		return (1);
-	return (0);
-}
-
 int	main(int ac, char **av)
 {
 	t_map	map;
+	int		a;
+	int		b;
 
+	a = 0;
+	b = 0;
+	map.tab = NULL;
 	if (ac == 2)
 	{
-		if (!check_ber(av[1]))
-			return (-1);
-		if (read_map(av[1], &map))
-			return (-1);
+		if ((a = check_ber(av[1])) || (b = read_map(av[1], &map)))
+		{
+			ft_printf("%d %d\n", a, b);
+			if (map.tab)
+				free_map(&map);
+			return (1);
+		}
+		if (*map.tab)
+			free_map(&map);
 	}
 }

@@ -1,6 +1,7 @@
 NAME = so_long
 
 SRCS =	check_map.c\
+		map_utils.c\
 
 LIB = libft.a
 
