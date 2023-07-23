@@ -40,5 +40,5 @@ re: fclean all
 
 .PHONY: all clean fclean re
 
-valgrind:
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) test.ber
+valgrind: clean all
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) $(foo)

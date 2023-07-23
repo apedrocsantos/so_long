@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 08:16:30 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/21 22:25:50 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/07/23 22:08:11 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,25 +131,26 @@ int	read_map(char *str, t_map *map)
 	return (get_map(str, map));
 }
 
+int check_map(char *str, t_map *map)
+{
+	int a;
+	
+	if ((a = check_ber(str)) || (a = read_map(str, map)))
+		return(a);
+	return(0);
+}
+
 int	main(int ac, char **av)
 {
 	t_map	map;
-	int		a;
-	int		b;
+	int rtn;
 
-	a = 0;
-	b = 0;
 	map.tab = NULL;
 	if (ac == 2)
 	{
-		if ((a = check_ber(av[1])) || (b = read_map(av[1], &map)))
-		{
-			ft_printf("%d %d\n", a, b);
-			if (map.tab)
-				free_map(&map);
-			return (1);
-		}
+		rtn = check_map(av[1], &map);
 		if (*map.tab)
 			free_map(&map);
+		return(rtn);
 	}
 }
