@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 22:22:58 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/21 22:24:23 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/07/23 22:56:34 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	check_ber(char *str)
 	i = 0;
 	while (str[i])
 		i++;
-	if (i > 4 && str[i - 4] && strncmp(&str[i - 4], ".ber", 4) == 0)
+	if (i > 4 && strncmp(&str[i - 4], ".ber", 4) == 0)
 		return (0);
 	return (9);
 }
