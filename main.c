@@ -5,93 +5,82 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/07 17:30:52 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/12 09:08:16 by anda-cun         ###   ########.fr       */
+/*   Created: 2023/07/24 16:42:14 by anda-cun          #+#    #+#             */
+/*   Updated: 2023/07/24 18:06:10 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
-#include "./includes/so_long.h"
-#include <stdio.h>
+#include "includes/so_long.h"
+#include "includes/mlx.h"
 
-#define WIN_X 250
-#define WIN_Y 250
-#define R 100
-#define G 100
-#define B 255
-
-int main()
+void *put_img(t_data *data)
 {
-    mlx_t   test;
-    void    *mlx_ptr;
-    t_img   image;
-    int     local_endian;
-    int a = 0x11223344;
-    int bpp;
-    int size;
-    int endian;
+	
+	data->img.img_ptr = mlx_xpm_file_to_image(data->mlx_ptr, "./assets/Player/idle/idle1.xpm", &data->img.w, &data->img.h);
+	return (data->img.img_ptr);
+}
 
-    if (((unsigned char *)&a)[0] == 0x11)
-        local_endian = 1;
-    else
-        local_endian = 0;
+int key_func(int key, t_data *data)
+{
+	mlx_destroy_image(data->mlx_ptr, data->img.img_ptr);
+	if (key == XK_Escape)
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	if (data->img.pos_y > 0 && (key == XK_w || key == XK_Up))
+		data->img.pos_y -= data->img.h;
+	else if (key == XK_a  || key == XK_Left)
+		data->img.pos_x -= data->img.w;
+	else if (key == XK_s  || key == XK_Down)
+		data->img.pos_y += data->img.h;
+	else if (key == XK_d  || key == XK_Right)
+		data->img.pos_x += data->img.w;
+	mlx_clear_window(data->mlx_ptr, data->win_ptr);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, put_img(data), data->img.pos_x, data->img.pos_y);
+	return (0);
+}
 
-    mlx_ptr = mlx_init();
-    test = (mlx_t) {mlx_ptr, mlx_new_window(mlx_ptr, WIN_X, WIN_Y, "So Long"), WIN_X, WIN_Y};
-    if (!test.mlx_ptr || !test.mlx_window)
-        return(1);
-    image.win = test;
-    int x = 0;
-    int color;
-    
-    while (x++ < WIN_X)
-    {
-      int y = WIN_X;
-      while (y--)
-        {
-	        color = (R<<16) + (G<<8) + B;
-            printf("%d\n", color);
-            mlx_pixel_put(test.mlx_ptr,test.mlx_window,x,y,color);
-        }
-    }
-    // mlx_clear_window(test.mlx_ptr, test.mlx_window);
-    // sleep(1);
-    // void *new_img = mlx_new_image(test.mlx_ptr, 42, 42);
+int close_window(t_data *data)
+{
+    mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	return(0);
+}
 
-    // int y = WIN_Y;
-    // while (y--)
-    // {
-    // x = 42;
-    //   while (x--)
-    //     {
-	//         color = (R + 30 <<16) + (G + 130 <<8) + (B + 100);
-    //         printf("new %d\n", color);
-    //         mlx_pixel_put(test.mlx_ptr,test.mlx_window,x,y,color);
-    //     }
-    // }
-    mlx_string_put(test.mlx_ptr, test.mlx_window, 42, 150, 0xFF44FF, "Test string");
-    
-    int xpm1_x;
-    int xpm1_y;
-    int bpp1, sl1, endian1;
-    void *img1 = mlx_xpm_file_to_image(test.mlx_ptr, "open.xpm", &xpm1_x, &xpm1_y);
-    printf("%d %d\n", xpm1_x, xpm1_y);
-    char *data1 = mlx_get_data_addr(img1,&bpp1, &sl1, &endian1);
-    mlx_put_image_to_window(test.mlx_ptr, test.mlx_window, img1, 0, 0);
-    // int xpm2_x;
-    // int xpm2_y;
-    // int bpp2, sl2, endian2;
-    // void *img2 = mlx_xpm_file_to_image(test.mlx_ptr, "idle2.xpm", &xpm2_x, &xpm2_y);
-    // char *data2 = mlx_get_data_addr(img2,&bpp2, &sl2, &endian2);
-    // mlx_put_image_to_window(test.mlx_ptr, test.mlx_window, img2, 0, 0);
-    sleep(3);
-    // int xpm2_x;
-    // int xpm2_y;
-    // int bpp2, sl2, endian2;
-    // void *img2 = mlx_xpm_file_to_image(test.mlx_ptr, "open24.xpm", &xpm1_x, &xpm1_y);
-    // char *data2 = mlx_get_data_addr(img2,&bpp2, &sl2, &endian2);
-    // mlx_put_image_to_window(test.mlx_ptr, test.mlx_window, img2, 0, 0);
-    // sleep(1);
-    // mlx_loop(test.mlx_ptr);
-    return(0);
+int handle_no_input(void *data)
+{
+	(void) data;
+	return (0);
+}
+
+void mega_free(t_data *data, t_map *map)
+{
+	free(data->mlx_ptr);
+	if (*map->tab)
+		free_map(map);
+}
+
+
+int	main(int ac, char **av)
+{
+	t_data data;
+	t_map	map;
+	data.img.pos_y = 0;
+	data.img.pos_x = 0;
+	int rtn = 0;
+
+	map.tab = NULL;
+	if (ac != 2)
+	{
+		ft_printf("Error: invalid command. use ./so_long path/to/map.ber\n");
+		return (-1);
+	}
+	if ((rtn = check_map(av[1], &map)))
+		ft_printf("Error: invalid map.\n");
+	data.mlx_ptr = mlx_init();
+	data.win_ptr = mlx_new_window(data.mlx_ptr, map.size.x * 32, map.size.y * 32, "so_long");
+	mlx_key_hook(data.win_ptr, key_func, &data);
+	mlx_hook(data.win_ptr, 17, 0, close_window, &data);
+	mlx_loop_hook(data.mlx_ptr, handle_no_input, 0);
+	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, put_img(&data), data.img.pos_x, data.img.pos_y);
+	mlx_loop(data.mlx_ptr);
+	mega_free(&data, &map);
+	return (rtn);
 }

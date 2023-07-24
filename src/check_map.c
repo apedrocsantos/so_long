@@ -6,13 +6,11 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 08:16:30 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/23 23:00:00 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/07/24 08:21:14 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
 #include "../includes/so_long.h"
-#include <stdlib.h>
 
 int	flood_fill(char **tab, t_map *map, t_point cur)
 {
@@ -133,26 +131,11 @@ int	read_map(char *str, t_map *map)
 	return (get_map(str, map));
 }
 
-int check_map(char *str, t_map *map)
+int	check_map(char *str, t_map *map)
 {
-	int a;
-	
+	int	a;
+
 	if ((a = check_ber(str)) || (a = read_map(str, map)))
-		return(a);
-	return(0);
-}
-
-int	main(int ac, char **av)
-{
-	t_map	map;
-	int rtn;
-
-	map.tab = NULL;
-	if (ac == 2)
-	{
-		rtn = check_map(av[1], &map);
-		if (map.tab)
-			free_map(&map);
-		return(rtn);
-	}
+		return (a);
+	return (0);
 }

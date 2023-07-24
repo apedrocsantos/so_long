@@ -11,7 +11,10 @@
         "utility": "c",
         "stdlib.h": "c",
         "stdio.h": "c",
-        "libft.h": "c"
+        "libft.h": "c",
+        "so_long.h": "c",
+        "keysym.h": "c",
+        "x.h": "c"
     },
     "cmake.configureOnOpen": true
 }
