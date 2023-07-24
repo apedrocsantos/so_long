@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:42:14 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/24 18:06:10 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/07/24 22:38:59 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,23 @@
 
 void *put_img(t_data *data)
 {
-	
 	data->img.img_ptr = mlx_xpm_file_to_image(data->mlx_ptr, "./assets/Player/idle/idle1.xpm", &data->img.w, &data->img.h);
+	mlx_get_data_addr(data->img.img_ptr, &data->img.bpp, &data->img.sl, &data->img.endian);
+	data->img.bpp *= 2;
 	return (data->img.img_ptr);
 }
 
 int key_func(int key, t_data *data)
 {
-	mlx_destroy_image(data->mlx_ptr, data->img.img_ptr);
 	if (key == XK_Escape)
+	{
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		return (0);
+	}
+	mlx_destroy_image(data->mlx_ptr, data->img.img_ptr);
 	if (data->img.pos_y > 0 && (key == XK_w || key == XK_Up))
 		data->img.pos_y -= data->img.h;
-	else if (key == XK_a  || key == XK_Left)
+	else if (data->img.pos_x > 0 && (key == XK_a  || key == XK_Left))
 		data->img.pos_x -= data->img.w;
 	else if (key == XK_s  || key == XK_Down)
 		data->img.pos_y += data->img.h;
@@ -79,7 +83,8 @@ int	main(int ac, char **av)
 	mlx_key_hook(data.win_ptr, key_func, &data);
 	mlx_hook(data.win_ptr, 17, 0, close_window, &data);
 	mlx_loop_hook(data.mlx_ptr, handle_no_input, 0);
-	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, put_img(&data), data.img.pos_x, data.img.pos_y);
+	ft_printf("%d %d\n", map.start.x, map.start.y);
+	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, put_img(&data), map.start.x * 32, map.start.y * 32);
 	mlx_loop(data.mlx_ptr);
 	mega_free(&data, &map);
 	return (rtn);
