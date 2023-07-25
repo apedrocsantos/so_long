@@ -27,13 +27,6 @@ typedef struct s_img
 	int		pos_x;
 }		t_img;
 
-typedef struct s_data
-{
-	void *mlx_ptr;
-	void *win_ptr;
-	t_img img;
-}	t_data;
-
 typedef struct s_point
 {
 	int y;
@@ -46,9 +39,18 @@ typedef struct s_map
 	int collectibles;
 	int exits;
 	int players;
+	int checked;
 	t_point size;
 	t_point start;
 }	t_map;
+
+typedef struct s_data
+{
+	void *mlx_ptr;
+	void *win_ptr;
+	t_img img;
+	t_map map;
+}	t_data;
 
 void	free_map(t_map *map);
 int	check_ber(char *str);

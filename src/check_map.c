@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 08:16:30 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/24 22:39:55 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/07/25 13:49:49 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,13 @@ int	flood_fill(char **tab, t_map *map, t_point cur)
 
 int	parse_map(t_map *map)
 {
-	int	i;
-	int	j;
-
 	map->collectibles = 0;
 	map->exits = 0;
 	map->players = 0;
-	i = 0;
-	j = 0;
+	int i = 0;
+	int j = 0;
+	
+	ft_printf("to free %p\n", map->tab[i]);
 	while (map->tab[j] && map->tab[j][i])
 	{
 		if (map->tab[j][i] == 'C')
@@ -48,14 +47,10 @@ int	parse_map(t_map *map)
 		else if (map->tab[j][i] == 'E')
 			map->exits++;
 		else if (map->tab[j][i] == 'P')
-		{
 			map->players++;
-			map->start.y = j;
-			map->start.x = i;
-		}
 		else if (map->tab[j][i] != '1' && map->tab[j][i] != '0')
 			return (2);
-		i++;
+		 i++;
 		if (!map->tab[j][i])
 		{
 			j++;
@@ -64,7 +59,9 @@ int	parse_map(t_map *map)
 	}
 	if (map->exits != 1 || map->players != 1 || map->collectibles < 1)
 		return (3);
-	return (flood_fill(map->tab, map, map->start));
+	if (!map->checked)
+		return (flood_fill(map->tab, map, map->start));
+	return (0);
 }
 
 int	get_map(char *str, t_map *map)
@@ -105,7 +102,9 @@ int	read_map(char *str, t_map *map)
 {
 	char	*line;
 	int		fd;
+	int		rtn;
 
+	map->checked = 0;
 	map->size.y = 0;
 	fd = open(str, O_RDONLY);
 	line = get_next_line(fd);
@@ -127,7 +126,14 @@ int	read_map(char *str, t_map *map)
 		}
 	}
 	close(fd);
-	return (get_map(str, map));
+	rtn = get_map(str, map);
+	if (!rtn && map->checked == 0)
+	{
+		free_map(map);
+		map->checked = 1;
+		get_map(str, map);
+	}
+	return (rtn);
 }
 
 int	check_map(char *str, t_map *map)
