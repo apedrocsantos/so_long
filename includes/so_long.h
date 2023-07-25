@@ -35,6 +35,7 @@ typedef struct s_point
 
 typedef struct s_map
 {
+	char *addr;
 	char **tab;
 	int collectibles;
 	int exits;

@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 22:22:58 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/25 13:48:05 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/07/25 17:06:17 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,8 @@ void	free_map(t_map *map)
 	int	i;
 
 	i = 0;
-	while (map->tab[i])
-	{
-		ft_printf("freeing %s\n", map->tab[i]);
+	while (map->tab && map->tab[i])
 		free(map->tab[i++]);
-	}
 	free(map->tab);
 }
 
