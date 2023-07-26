@@ -6,13 +6,11 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 08:16:30 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/25 17:34:07 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/07/26 12:10:57 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
-
-int		get_map(char *str, t_map *map);
+#include "so_long.h"
 
 int	flood_fill(char **tab, t_map *map, t_point cur)
 {
@@ -29,60 +27,8 @@ int	flood_fill(char **tab, t_map *map, t_point cur)
 	flood_fill(tab, map, (t_point){cur.y, cur.x + 1});
 	flood_fill(tab, map, (t_point){cur.y, cur.x - 1});
 	if (!map->collectibles && !map->exits)
-	{
-		// free_map(map);
 		return (0);
-	}
 	return (1);
-}
-
-void	get_start_pos(t_map *map)
-{
-	int	i;
-	int	j;
-
-	i = -1;
-	j = 0;
-	while (map->tab[j] && map->tab[j][++i])
-	{
-		if (map->tab[j][i] == 'P')
-		{
-			map->start.y = j;
-			map->start.x = i;
-			break ;
-		}
-		if (!map->tab[j][i + 1])
-		{
-			j++;
-			i = -1;
-		}
-	}
-}
-
-int	check_chars(t_map *map)
-{
-	int	i;
-	int	j;
-
-	i = -1;
-	j = 0;
-	while (map->tab[j] && map->tab[j][++i])
-	{
-		if (map->tab[j][i] == 'C')
-			map->collectibles++;
-		else if (map->tab[j][i] == 'E')
-			map->exits++;
-		else if (map->tab[j][i] == 'P')
-			map->players++;
-		else if (map->tab[j][i] != '1' && map->tab[j][i] != '0')
-			return (2);
-		if (!map->tab[j][i + 1])
-		{
-			j++;
-			i = -1;
-		}
-	}
-	return (0);
 }
 
 int	parse_map(t_map *map)
@@ -114,6 +60,8 @@ int	parse_map(t_map *map)
 		free_map(map);
 		get_map(map->addr, map);
 	}
+	else
+		return (1);
 	return (0);
 }
 
@@ -149,7 +97,7 @@ int	read_map(char *str, t_map *map)
 	fd = open(str, O_RDONLY);
 	line = get_next_line(fd);
 	if (line == NULL)
-		return (7);
+		return (5);
 	map->size.x = ft_strlen(line);
 	while (line)
 	{
@@ -162,7 +110,7 @@ int	read_map(char *str, t_map *map)
 		{
 			free(line);
 			close(fd);
-			return (8);
+			return (6);
 		}
 	}
 	close(fd);
@@ -179,9 +127,20 @@ int	check_map(char *str, t_map *map)
 	map->collectibles = 0;
 	map->exits = 0;
 	map->players = 0;
+	map->tab = NULL;
 	a = check_ber(str);
-	b = read_map(str, map);
 	if (a)
+	{
+		ft_putstr_fd("Error: invalid map.\n", 2);
 		return (a);
-	return (b);
+	}
+	b = read_map(str, map);
+	if (b)
+	{
+		if (map->tab)
+			free_map(map);
+		ft_putstr_fd("Error: invalid map.\n", 2);
+		return (b);
+	}
+	return (0);
 }

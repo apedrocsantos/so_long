@@ -2,46 +2,55 @@ NAME = so_long
 
 SRCS =	check_map.c\
 		map_utils.c\
+		utils.c\
 		main.c\
 
-# SRCS = delme.c
+LIBFT = libft.a
 
-LIB = libft.a
+LIBMLX = libmlx.a
 
-CC = cc
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -DDEBUG=1
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+INCLUDES = -I ./includes
 
-INCLUDES= -I ./includes
+HEADERFILES = ./includes/so_long.h
 
 VPATH = src
 
-LINK = -ldl -pthread -lm
-
-LIBS = -L /usr/local/lib libmlx.a -lXext -lX11
+LIBS = -L /usr/local/lib libmlx.a -lXext -lX11 -ldl -pthread -lm
 
 all: $(NAME)
 
-$(NAME): $(SRCS) $(LIB)
-	$(CC) $(CFLAGS) $^ $(INCLUDES) $(LIB) $(LIBS) $(LINK) -o $(NAME) -g
+$(NAME): $(SRCS) $(LIBFT) $(LIBMLX)
+	@$(CC) $(CFLAGS) $^ $(INCLUDES) $(LIBFT) $(LIBMLX) $(LIBS) -o $(NAME) -g
+	@echo "compilation OK."
 
-$(LIB):
+
+$(LIBFT):
 	@$(MAKE) -s -C libft
-	@mv libft/$(LIB) .
+	@mv libft/$(LIBFT) .
 	@$(MAKE) -s -C libft clean
 	@echo "libft OK."
 
+$(LIBMLX):
+	@$(MAKE) -s -C minilibx-linux
+	@mv minilibx-linux/$(LIBMLX) .
+	@echo "libmlx OK."
+
 clean:
-	rm -f $(NAME)
+	@echo "removing ./so_long."
+	@rm -f $(NAME)
 
 fclean:
-	rm -f $(NAME) $(LIB)
+	@echo "removing ./so_long, libft.a and libmlx.a."
+	@rm -f $(NAME) $(LIBFT) $(LIBMLX)
 
 re: fclean all
 
-.SILENT: clean fclean re
+valgrind: clean all
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) $(map)
+
+.SILENT: $(LIBMLX)
 
 .PHONY: all clean fclean re
 
-valgrind: clean all
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) $(map)
