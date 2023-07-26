@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:42:14 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/25 18:00:23 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/07/26 07:06:10 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,20 @@ void	*put_img(t_data *data)
 
 int	key_func(int key, t_data *data)
 {
+	
 	mlx_destroy_image(data->mlx_ptr, data->img.img_ptr);
 	if (key == XK_Escape)
 	{
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		return (0);
 	}
-	if ((key == XK_w || key == XK_Up))
+	if ((key == XK_w || key == XK_Up) && data->map.tab[data->map.start.y-1][data->map.start.x] != '1')
 		data->map.start.y--;
-	else if ((key == XK_a || key == XK_Left))
+	else if ((key == XK_a || key == XK_Left) && data->map.tab[data->map.start.y][data->map.start.x-1] != '1')
 		data->map.start.x--;
-	else if ((key == XK_s || key == XK_Down))
-		data->map.start.y ++;
-	else if ((key == XK_d || key == XK_Right))
+	else if ((key == XK_s || key == XK_Down) && data->map.tab[data->map.start.y+1][data->map.start.x] != '1')
+		data->map.start.y++;
+	else if ((key == XK_d || key == XK_Right) && data->map.tab[data->map.start.y][data->map.start.x+1] != '1')
 		data->map.start.x++;
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, put_img(data),
@@ -92,7 +93,7 @@ int	main(int ac, char **av)
 			data.map.size.y * 32, "so_long");
 	mlx_key_hook(data.win_ptr, key_func, &data);
 	mlx_hook(data.win_ptr, 17, 0, close_window, &data);
-	mlx_loop_hook(data.mlx_ptr, handle_no_input, 0);
+	mlx_loop_hook(data.mlx_ptr, &handle_no_input, 0);
 	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, put_img(&data), data.map.start.x * 32, data.map.start.y * 32);
 	mlx_loop(data.mlx_ptr);
 	mega_free(&data);
