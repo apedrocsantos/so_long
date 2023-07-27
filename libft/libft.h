@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 16:47:34 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/20 12:17:02 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/07/27 17:19:22 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,6 @@ char				*get_next_line(int fd);
 int					ft_move_and_clean(char *buf);
 void				ft_clean_buf(char *buf);
 size_t				ft_strlen_gnl(const char *s);
-char	*ft_strjoin_gnl(char const *s1, char const *s2);
+char				*ft_strjoin_gnl(char const *s1, char const *s2);
 
 #endif

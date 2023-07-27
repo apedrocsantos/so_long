@@ -42,6 +42,7 @@ typedef struct s_map
 	int		checked;
 	t_point	size;
 	t_point	start;
+	t_point exit_pos;
 }			t_map;
 
 typedef struct s_data
@@ -64,7 +65,7 @@ int	read_map(char *str, t_map *map);
 int	get_map(char *str, t_map *map);
 int	parse_map(t_map *map);
 int	check_chars(t_map *map);
-void	get_start_pos(t_map *map);
+void	get_start_pos_and_exit(t_map *map);
 int	flood_fill(char **tab, t_map *map, t_point cur);
 void	mega_free(t_data *data);
 int game_init (t_data *data);

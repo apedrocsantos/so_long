@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 08:16:30 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/27 10:40:55 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/07/27 17:23:55 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	parse_map(t_map *map)
 	j = 0;
 	if (check_chars(map))
 		return (2);
-	get_start_pos(map);
+	get_start_pos_and_exit(map);
 	while (map->tab[j] && map->tab[j][++i])
 	{
 		if (j == 0 || j == map->size.y - 1 || i == 0 || i == map->size.x - 1)

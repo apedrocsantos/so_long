@@ -6,13 +6,13 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 22:22:58 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/26 12:11:00 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/07/27 17:24:31 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	get_start_pos(t_map *map)
+void	get_start_pos_and_exit(t_map *map)
 {
 	int	i;
 	int	j;
@@ -25,7 +25,11 @@ void	get_start_pos(t_map *map)
 		{
 			map->start.y = j;
 			map->start.x = i;
-			break ;
+		}
+		if (map->tab[j][i] == 'E')
+		{
+			map->exit_pos.y = j;
+			map->exit_pos.x = i;
 		}
 		if (!map->tab[j][i + 1])
 		{
