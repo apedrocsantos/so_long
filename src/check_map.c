@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 08:16:30 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/26 12:10:57 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/07/27 10:40:55 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,16 +130,12 @@ int	check_map(char *str, t_map *map)
 	map->tab = NULL;
 	a = check_ber(str);
 	if (a)
-	{
-		ft_putstr_fd("Error: invalid map.\n", 2);
 		return (a);
-	}
 	b = read_map(str, map);
 	if (b)
 	{
 		if (map->tab)
 			free_map(map);
-		ft_putstr_fd("Error: invalid map.\n", 2);
 		return (b);
 	}
 	return (0);

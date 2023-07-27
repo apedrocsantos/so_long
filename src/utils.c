@@ -6,15 +6,8 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 11:30:52 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/26 11:31:36 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/07/27 15:41:46 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
 
-void	mega_free(t_data *data)
-{
-	if (data->map.tab)
-		free_map(&data->map);
-	free(data->mlx_ptr);
-}

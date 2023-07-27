@@ -2,7 +2,7 @@ NAME = so_long
 
 SRCS =	check_map.c\
 		map_utils.c\
-		utils.c\
+		frees.c\
 		main.c\
 
 LIBFT = libft.a

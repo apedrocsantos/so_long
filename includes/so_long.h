@@ -18,7 +18,7 @@
 typedef struct s_img
 {
 	void	*img_ptr;
-	char	*addr;
+	void 	*addr;
 	int		h;
 	int		w;
 	int		bpp;
@@ -34,7 +34,7 @@ typedef struct s_point
 
 typedef struct s_map
 {
-	char	*addr;
+	void	*addr;
 	char	**tab;
 	int		collectibles;
 	int		exits;
@@ -48,7 +48,12 @@ typedef struct s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
-	t_img	img;
+	int		move_count;
+	t_img	player;
+	t_img	wall;
+	t_img	floor;
+	t_img	collectible;
+	t_img	exit;
 	t_map	map;
 }			t_data;
 
@@ -67,5 +72,6 @@ int	handle_no_input(void *data);
 int	close_window(t_data *data);
 int	key_func(int key, t_data *data);
 void	*put_img(t_data *data);
+int error_end_program(t_data *data, char *msg, int rtn);
 
 #endif
