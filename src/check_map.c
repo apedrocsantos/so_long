@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 08:16:30 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/27 17:23:55 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/07/28 17:43:13 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,8 @@ int	flood_fill(char **tab, t_map *map, t_point cur)
 	return (1);
 }
 
-int	parse_map(t_map *map)
+int	parse_map(t_map *map, int i, int j)
 {
-	int	i;
-	int	j;
-
-	i = -1;
-	j = 0;
 	if (check_chars(map))
 		return (2);
 	get_start_pos_and_exit(map);
@@ -52,75 +47,74 @@ int	parse_map(t_map *map)
 			i = -1;
 		}
 	}
-	if (map->exits != 1 || map->players != 1 || map->collectibles < 1)
-		return (4);
 	if (!map->checked && !flood_fill(map->tab, map, map->start))
 	{
 		map->checked = 1;
 		free_map(map);
-		get_map(map->addr, map);
+		get_map(map);
 	}
 	else
-		return (1);
+		return (5);
 	return (0);
 }
 
-int	get_map(char *str, t_map *map)
+int	get_map(t_map *map)
 {
-	int		fd;
 	int		i;
 	char	*line;
 
 	i = 0;
+	map->fd = open(map->addr, O_RDONLY);
 	map->tab = (char **)ft_calloc((map->size.y + 1), sizeof(char **));
-	fd = open(str, O_RDONLY);
-	line = get_next_line(fd);
-	if (line == NULL)
-		return (5);
+	if (!map->tab)
+		return (6);
+	line = get_next_line(map->fd);
+	if (!line)
+		return (7);
 	while (line)
 	{
 		map->tab[i++] = ft_strdup(line);
 		free(line);
-		line = get_next_line(fd);
+		line = get_next_line(map->fd);
 		if (!line)
 			break ;
 	}
-	close(fd);
-	return (parse_map(map));
+	close(map->fd);
+	return (parse_map(map, -1, 0));
 }
 
-int	read_map(char *str, t_map *map)
+int	read_map(t_map *map)
 {
 	char	*line;
-	int		fd;
 
-	fd = open(str, O_RDONLY);
-	line = get_next_line(fd);
+	map->fd = open(map->addr, O_RDONLY);
+	if (map->fd < 0)
+		return (8);
+	line = get_next_line(map->fd);
 	if (line == NULL)
-		return (5);
+		return (9);
 	map->size.x = ft_strlen(line);
 	while (line)
 	{
 		map->size.y++;
 		free(line);
-		line = get_next_line(fd);
+		line = get_next_line(map->fd);
 		if (!line)
 			break ;
 		if ((int)ft_strlen(line) != map->size.x)
 		{
 			free(line);
-			close(fd);
-			return (6);
+			close(map->fd);
+			return (10);
 		}
 	}
-	close(fd);
-	return (get_map(map->addr, map));
+	close(map->fd);
+	return (get_map(map));
 }
 
-int	check_map(char *str, t_map *map)
+int	check_map(t_map *map)
 {
 	int	a;
-	int	b;
 
 	map->checked = 0;
 	map->size.y = 0;
@@ -128,15 +122,12 @@ int	check_map(char *str, t_map *map)
 	map->exits = 0;
 	map->players = 0;
 	map->tab = NULL;
-	a = check_ber(str);
-	if (a)
-		return (a);
-	b = read_map(str, map);
-	if (b)
-	{
-		if (map->tab)
-			free_map(map);
-		return (b);
-	}
-	return (0);
+	check_ber(map->addr);
+	a = read_map(map);
+	if (!a)
+		return (0);
+	if (map->tab)
+		free_map(map);
+	ft_putendl_fd("Error\nInvalid map.", 2);
+	exit (a);
 }

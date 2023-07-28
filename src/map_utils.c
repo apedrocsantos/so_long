@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 22:22:58 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/27 17:24:31 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/07/28 17:35:53 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	check_chars(t_map *map)
 			i = -1;
 		}
 	}
+	if (map->exits != 1 || map->players != 1 || map->collectibles < 1)
+		return (4);
 	return (0);
 }
 
@@ -77,12 +79,9 @@ void	free_map(t_map *map)
 
 int	check_ber(char *str)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	if (i > 4 && strncmp(&str[i - 4], ".ber", 4) == 0)
-		return (0);
-	return (7);
+	if (ft_strchr(str, '.'))
+		if (!strncmp(ft_strchr(str, '.'), ".ber\0", 5))
+			return (0);
+	ft_putendl_fd("Error\nInvalid map.", 2);
+	exit (7);
 }

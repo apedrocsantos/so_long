@@ -3,13 +3,14 @@ NAME = so_long
 SRCS =	check_map.c\
 		map_utils.c\
 		frees.c\
+		utils.c\
 		main.c\
 
 LIBFT = libft.a
 
 LIBMLX = libmlx.a
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -DDEBUG=1
+CFLAGS = -Wall -Wextra -Werror -DDEBUG=1
 
 INCLUDES = -I ./includes
 
