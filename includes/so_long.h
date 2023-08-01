@@ -6,40 +6,19 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 10:28:42 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/28 18:12:17 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/08/01 20:06:47 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 
 # define SO_LONG_H
-# define WINDOW_WIDTH 500
-# define WINDOW_HEIGHT 500
-
-// #define WINDOW_WIDTH 1920
-// #define WINDOW_HEIGHT 1080 - 35 - 50
 
 # include "../minilibx-linux/mlx.h"
 # include "libft.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <stdlib.h>
-
-/* # define MAP_ERRORS ((char const *[]){"", "No valid path in map.\n", */
-/* 		"Invalid char.\n", "Invalid borders.\n", "Too many players, */
-/* 		exits or not enough collectibles.\n", " Error reading map.\n ", */
-/* 		"Map is not a rectangle.\n", "Invalid file.\n"}) */
-
-typedef struct s_img
-{
-	void	*img_ptr;
-	void	*addr;
-	int		h;
-	int		w;
-	int		bpp;
-	int		endian;
-	int		sl;
-}			t_img;
 
 typedef struct s_point
 {
@@ -61,17 +40,32 @@ typedef struct s_map
 	t_point	exit_pos;
 }			t_map;
 
+typedef struct s_img
+{
+	void	*img_ptr;
+	void	*addr;
+	int		h;
+	int		w;
+	int		bpp;
+	int		endian;
+	int		sl;
+	struct s_img 	*next;
+}			t_img;
+
 typedef struct s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
 	int		move_count;
 	int		size;
+	int		anim_speed;
+	int		anim_counter;
 	t_img	player;
 	t_img	wall;
 	t_img	floor;
 	t_img	collectible;
 	t_img	exit;
+	t_img	enemy;
 	t_map	map;
 }			t_data;
 
@@ -96,5 +90,9 @@ void		get_img(t_data *data, t_img *img, char *str);
 void		init_imgs(t_data *data);
 void		draw_rectangle(t_data *data);
 int			check_victory(void *new_data);
+int animate_sprites(t_data *data);
+int get_sprites(t_data *data);
+void	get_img(t_data *data, t_img *img, char *str);
+void move_player(t_data *data, int x, int y);
 
 #endif

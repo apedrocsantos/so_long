@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_map.c                                        :+:      :+:    :+:   */
+/*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 08:16:30 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/28 17:43:13 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/07/30 19:07:36 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,13 @@ int	parse_map(t_map *map, int i, int j)
 			i = -1;
 		}
 	}
-	if (!map->checked && !flood_fill(map->tab, map, map->start))
-	{
-		map->checked = 1;
-		free_map(map);
-		get_map(map);
-	}
-	else
+	if (map->checked)
+		return (0);
+	if (flood_fill(map->tab, map, map->start))
 		return (5);
+	map->checked = 1;
+	free_map(map);
+	get_map(map);
 	return (0);
 }
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 10:27:34 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/08/01 16:31:57 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/08/01 20:01:35 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ int	check_victory(void *new_data)
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 			data->exit.img_ptr, data->map.exit_pos.x * data->size,
 			data->map.exit_pos.y * data->size);
+	}
+	if (data->map.tab[data->map.start.y][data->map.start.x] == 'X')
+	{
+		ft_printf("You lost!\n");
+		close_window(data, NULL, 0);
 	}
 	if (data->map.tab[data->map.start.y][data->map.start.x] == 'E'
 		&& !data->map.collectibles)
@@ -62,5 +67,21 @@ void	init_imgs(t_data *data)
 	get_img(data, &data->floor, "./assets/floor.xpm");
 	get_img(data, &data->collectible, "./assets/collectible.xpm");
 	get_img(data, &data->exit, "./assets/exit.xpm");
+	get_img(data, &data->enemy, "./assets/enemy.xpm");
 	data->size = data->player.h;
+}
+
+void	draw_rectangle(t_data *data)
+{
+	int	j;
+	int	i;
+
+	j = data->map.size.y * data->size - 1;
+	i = data->map.size.x * data->size;
+	while (++j < (data->map.size.y + 1) * data->size)
+	{
+		i = -1;
+		while (++i < data->map.size.x * data->size)
+			mlx_pixel_put(data->mlx_ptr, data->win_ptr, i, j, 0x000000);
+	}
 }

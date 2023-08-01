@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_utils.c                                        :+:      :+:    :+:   */
+/*   map_utils_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 22:22:58 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/29 14:37:30 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/07/30 19:26:53 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int	check_chars(t_map *map)
 			map->exits++;
 		else if (map->tab[j][i] == 'P')
 			map->players++;
-		else if (map->tab[j][i] != '1' && map->tab[j][i] != '0')
+		else if (map->tab[j][i] != '1' && map->tab[j][i] != '0'
+				&& map->tab[j][i] != 'X')
 			return (2);
 		if (!map->tab[j][i + 1])
 		{
@@ -83,5 +84,5 @@ int	check_ber(char *str)
 		if (!strncmp(ft_strchr(str, '.'), ".ber\0", 5))
 			return (0);
 	ft_putendl_fd("Error\nInvalid map.", 2);
-	exit (7);
+	exit(7);
 }

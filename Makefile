@@ -1,16 +1,22 @@
 NAME = so_long
 
-SRCS =	check_map.c\
+SRCS =	map_check.c\
 		map_utils.c\
-		frees.c\
+		utils2.c\
 		utils.c\
 		main.c\
+
+B_SRCS = map_check_bonus.c\
+		map_utils_bonus.c\
+		utils2.c\
+		utils_bonus.c\
+		main_bonus.c\
 
 LIBFT = libft.a
 
 LIBMLX = libmlx.a
 
-CFLAGS = -Wall -Wextra -Werror -DDEBUG=1
+CFLAGS = -Wall -Wextra -Werror -DDEBUG=1 -fsanitize=address
 
 INCLUDES = -I ./includes
 
@@ -26,6 +32,9 @@ $(NAME): $(SRCS) $(LIBFT) $(LIBMLX)
 	@$(CC) $(CFLAGS) $^ $(INCLUDES) $(LIBFT) $(LIBMLX) $(LIBS) -o $(NAME) -g
 	@echo "compilation OK."
 
+bonus: $(B_SRCS) $(LIBFT) $(LIBMLX)
+	@$(CC) $(CFLAGS) $^ $(INCLUDES) $(LIBFT) $(LIBMLX) $(LIBS) -o $(NAME) -g
+	@echo "compilation OK."
 
 $(LIBFT):
 	@$(MAKE) -s -C libft
@@ -49,9 +58,9 @@ fclean:
 re: fclean all
 
 valgrind: clean all
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) $(map)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes -s ./$(NAME) $(map)
 
 .SILENT: $(LIBMLX)
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus
 
