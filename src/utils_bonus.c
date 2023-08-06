@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 10:27:34 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/08/01 20:01:35 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/08/01 20:23:12 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,14 @@ int	check_victory(void *new_data)
 	}
 	if (data->map.tab[data->map.start.y][data->map.start.x] == 'X')
 	{
+		sleep(1);
 		ft_printf("You lost!\n");
 		close_window(data, NULL, 0);
 	}
 	if (data->map.tab[data->map.start.y][data->map.start.x] == 'E'
 		&& !data->map.collectibles)
 	{
+		sleep(1);
 		ft_printf("GG!\n");
 		close_window(data, NULL, 0);
 	}
