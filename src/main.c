@@ -6,13 +6,13 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:42:14 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/08/01 20:11:31 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/08/07 10:31:28 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-/*Bonus; Enemy leaks*/
+/*Bonus: Enemy animation*/
 
 void	counter(t_data *data, int *x, int *y)
 {
@@ -44,13 +44,19 @@ int	key_func(int key, t_data *data)
 		move_player(data, 0, -1);
 	else if ((key == XK_a || key == XK_Left)
 		&& data->map.tab[data->map.start.y][data->map.start.x - 1] != '1')
+	{
+		data->player = data->player_left;
 		move_player(data, -1, 0);
+	}
 	else if ((key == XK_s || key == XK_Down) && data->map.tab[data->map.start.y
 			+ 1][data->map.start.x] != '1')
 		move_player(data, 0, 1);
 	else if ((key == XK_d || key == XK_Right)
 		&& data->map.tab[data->map.start.y][data->map.start.x + 1] != '1')
+	{
+		data->player = data->player_right;
 		move_player(data, 1, 0);
+	}
 	else
 		return (0);
 	counter(data, &data->map.start.x, &data->map.start.y);
@@ -69,7 +75,7 @@ void	*draw_screen(t_data *data, int j, int i)
 				data->collectible.img_ptr, i * data->size, j * data->size);
 		else if (data->map.tab[j][i] == 'P')
 			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-				data->player.img_ptr, i * data->size, j * data->size);
+				data->player_right.img_ptr, i * data->size, j * data->size);
 		else
 			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 				data->floor.img_ptr, i * data->size, j * data->size);

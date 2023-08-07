@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 08:16:30 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/30 19:27:44 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/08/07 15:18:05 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	flood_fill(char **tab, t_map *map, t_point cur)
 {
 	if (cur.y < 0 || cur.y >= map->size.y || cur.x < 0 || cur.x >= map->size.x
 		|| (tab[cur.y][cur.x] == 'F' || tab[cur.y][cur.x] == '1'
-			|| tab[cur.y][cur.x] == 'X'))
+			|| tab[cur.y][cur.x] == 'L' || tab[cur.y][cur.x] == 'R'))
 		return (0);
 	if (tab[cur.y][cur.x] == 'C')
 		map->collectibles -= 1;

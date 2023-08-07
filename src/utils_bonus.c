@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 10:27:34 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/08/01 20:23:12 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/08/07 15:18:38 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,14 @@ int	check_victory(void *new_data)
 			data->exit.img_ptr, data->map.exit_pos.x * data->size,
 			data->map.exit_pos.y * data->size);
 	}
-	if (data->map.tab[data->map.start.y][data->map.start.x] == 'X')
+	if (data->map.tab[data->map.start.y][data->map.start.x] == 'L' || data->map.tab[data->map.start.y][data->map.start.x] == 'R')
 	{
-		sleep(1);
 		ft_printf("You lost!\n");
 		close_window(data, NULL, 0);
 	}
 	if (data->map.tab[data->map.start.y][data->map.start.x] == 'E'
 		&& !data->map.collectibles)
 	{
-		sleep(1);
 		ft_printf("GG!\n");
 		close_window(data, NULL, 0);
 	}
@@ -59,17 +57,25 @@ void	get_img(t_data *data, t_img *img, char *str)
 void	init_imgs(t_data *data)
 {
 	data->player.img_ptr = NULL;
+	data->player_left.img_ptr = NULL;
+	data->player_right.img_ptr = NULL;
 	data->wall.img_ptr = NULL;
 	data->floor.img_ptr = NULL;
 	data->collectible.img_ptr = NULL;
 	data->exit.img_ptr = NULL;
 	data->enemy.img_ptr = NULL;
-	get_img(data, &data->player, "./assets/player.xpm");
+	data->enemy_reg.img_ptr = NULL;
+	data->enemy_inv.img_ptr = NULL;
+	get_img(data, &data->player_left, "./assets/player_left.xpm");
+	get_img(data, &data->player_right, "./assets/player_right.xpm");
+	data->player = data->player_right;
 	get_img(data, &data->wall, "./assets/wall.xpm");
 	get_img(data, &data->floor, "./assets/floor.xpm");
 	get_img(data, &data->collectible, "./assets/collectible.xpm");
 	get_img(data, &data->exit, "./assets/exit.xpm");
-	get_img(data, &data->enemy, "./assets/enemy.xpm");
+	get_img(data, &data->enemy_reg, "./assets/enemy.xpm");
+	get_img(data, &data->enemy_inv, "./assets/enemy_invert.xpm");
+	data->enemy = data->enemy_reg;
 	data->size = data->player.h;
 }
 

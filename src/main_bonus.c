@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:42:14 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/08/01 20:08:34 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/08/07 15:19:19 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ void	counter(t_data *data, int *x, int *y)
 	if (data->map.tab[*y][*x] == 'C')
 	{
 		data->map.collectibles--;
+		data->anim_speed = (data->map.collectibles + 1) * 10000;
+		if (data->anim_counter > data->anim_speed)
+			data->anim_counter = 0;
 		data->map.tab[*y][*x] = '0';
 	}
 	data->move_count++;
@@ -45,13 +48,19 @@ int	key_func(int key, t_data *data)
 		move_player(data, 0, -1);
 	else if ((key == XK_a || key == XK_Left)
 		&& data->map.tab[data->map.start.y][data->map.start.x - 1] != '1')
+	{
+		data->player = data->player_left;
 		move_player(data, -1, 0);
+	}
 	else if ((key == XK_s || key == XK_Down) && data->map.tab[data->map.start.y
 			+ 1][data->map.start.x] != '1')
 		move_player(data, 0, 1);
 	else if ((key == XK_d || key == XK_Right)
 		&& data->map.tab[data->map.start.y][data->map.start.x + 1] != '1')
+	{
+		data->player = data->player_right;
 		move_player(data, 1, 0);
+	}
 	else
 		return (0);
 	counter(data, &data->map.start.x, &data->map.start.y);
@@ -70,8 +79,8 @@ void	*draw_screen(t_data *data, int j, int i)
 				data->collectible.img_ptr, i * data->size, j * data->size);
 		else if (data->map.tab[j][i] == 'P')
 			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-				data->player.img_ptr, i * data->size, j * data->size);
-		else if (data->map.tab[j][i] == 'X')
+				data->player_right.img_ptr, i * data->size, j * data->size);
+		else if (data->map.tab[j][i] == 'L' || data->map.tab[j][i] == 'R')
 			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 				data->enemy.img_ptr, i * data->size, j * data->size);
 		else
@@ -91,18 +100,20 @@ int	game_init(t_data *data)
 	data->mlx_ptr = NULL;
 	data->win_ptr = NULL;
 	data->move_count = 0;
-	data->anim_speed = 100;
+	data->anim_counter = 0;
 	check_map(&data->map);
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		close_window(data, "Error\nError creating window.", 10);
 	init_imgs(data);
+	data->player = data->player_right;
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->map.size.x * data->size,
 			data->map.size.y * data->size + data->size, "so_long");
 	if (!data->win_ptr)
 		close_window(data, "Error\nError creating window.", 11);
 	draw_screen(data, 0, -1);
 	draw_rectangle(data);
+	data->anim_speed = (data->map.collectibles + 1) * 10000;
 	return (0);
 }
 
@@ -119,6 +130,7 @@ int	main(int ac, char **av)
 	game_init(&data);
 	mlx_hook(data.win_ptr, 2, (1L << 0), &key_func, &data);
 	mlx_hook(data.win_ptr, 17, 0, &close_success, &data);
+	mlx_loop_hook(data.mlx_ptr, &animate_sprites, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

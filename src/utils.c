@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 10:27:34 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/08/01 16:31:57 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/08/07 14:35:58 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	check_victory(void *new_data)
 	if (data->map.tab[data->map.start.y][data->map.start.x] == 'E'
 		&& !data->map.collectibles)
 	{
-		ft_printf("GG!\n");
+		ft_printf("OMG YOU WON!\n");
 		close_window(data, NULL, 0);
 	}
 	return (0);
@@ -52,12 +52,17 @@ void	get_img(t_data *data, t_img *img, char *str)
 void	init_imgs(t_data *data)
 {
 	data->player.img_ptr = NULL;
+	data->player_left.img_ptr = NULL;
+	data->player_right.img_ptr = NULL;
 	data->wall.img_ptr = NULL;
 	data->floor.img_ptr = NULL;
 	data->collectible.img_ptr = NULL;
 	data->exit.img_ptr = NULL;
-	data->enemy.img_ptr = NULL;
-	get_img(data, &data->player, "./assets/player.xpm");
+	data->enemy_reg.img_ptr = NULL;
+	data->enemy_inv.img_ptr = NULL;
+	get_img(data, &data->player_left, "./assets/player_left.xpm");
+	get_img(data, &data->player_right, "./assets/player_right.xpm");
+	data->player = data->player_right;
 	get_img(data, &data->wall, "./assets/wall.xpm");
 	get_img(data, &data->floor, "./assets/floor.xpm");
 	get_img(data, &data->collectible, "./assets/collectible.xpm");

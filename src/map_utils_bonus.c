@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 22:22:58 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/30 19:26:53 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/08/07 15:18:52 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	check_chars(t_map *map)
 		else if (map->tab[j][i] == 'P')
 			map->players++;
 		else if (map->tab[j][i] != '1' && map->tab[j][i] != '0'
-				&& map->tab[j][i] != 'X')
+				&& map->tab[j][i] != 'R' && map->tab[j][i] != 'L')
 			return (2);
 		if (!map->tab[j][i + 1])
 		{

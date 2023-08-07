@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 15:41:27 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/08/01 20:22:23 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/08/07 14:35:19 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	free_imgs(t_data *data)
 {
-	if (data->player.img_ptr)
-		mlx_destroy_image(data->mlx_ptr, data->player.img_ptr);
+	if (data->player_left.img_ptr)
+		mlx_destroy_image(data->mlx_ptr, data->player_left.img_ptr);
+	if (data->player_right.img_ptr)
+		mlx_destroy_image(data->mlx_ptr, data->player_right.img_ptr);
 	if (data->wall.img_ptr)
 		mlx_destroy_image(data->mlx_ptr, data->wall.img_ptr);
 	if (data->floor.img_ptr)
@@ -24,8 +26,10 @@ void	free_imgs(t_data *data)
 		mlx_destroy_image(data->mlx_ptr, data->collectible.img_ptr);
 	if (data->exit.img_ptr)
 		mlx_destroy_image(data->mlx_ptr, data->exit.img_ptr);
-	if (data->enemy.img_ptr)
-		mlx_destroy_image(data->mlx_ptr, data->enemy.img_ptr);
+	if (data->enemy_reg.img_ptr)
+		mlx_destroy_image(data->mlx_ptr, data->enemy_reg.img_ptr);
+	if (data->enemy_inv.img_ptr)
+		mlx_destroy_image(data->mlx_ptr, data->enemy_inv.img_ptr);
 }
 
 int	close_window(t_data *data, char *error, int rtn)
@@ -41,6 +45,7 @@ int	close_window(t_data *data, char *error, int rtn)
 		mlx_destroy_display(data->mlx_ptr);
 		free(data->mlx_ptr);
 	}
+	ft_printf("Program closed.\n");
 	exit(rtn);
 }
 
