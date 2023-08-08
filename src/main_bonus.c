@@ -6,11 +6,11 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:42:14 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/08/07 15:19:19 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/08/08 10:08:55 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 /*Bonus;*/
 

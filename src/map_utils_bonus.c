@@ -6,11 +6,11 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 22:22:58 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/08/07 15:18:52 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/08/08 10:09:10 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 void	get_start_pos_and_exit(t_map *map)
 {

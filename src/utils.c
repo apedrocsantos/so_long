@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 10:27:34 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/08/07 14:35:58 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/08/08 10:29:12 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,8 @@ int	close_success(t_data *data)
 	return (0);
 }
 
-int	check_victory(void *new_data)
+int	check_victory(t_data *data)
 {
-	t_data	*data;
-
-	data = new_data;
 	if (!data->map.collectibles)
 	{
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
@@ -58,8 +55,6 @@ void	init_imgs(t_data *data)
 	data->floor.img_ptr = NULL;
 	data->collectible.img_ptr = NULL;
 	data->exit.img_ptr = NULL;
-	data->enemy_reg.img_ptr = NULL;
-	data->enemy_inv.img_ptr = NULL;
 	get_img(data, &data->player_left, "./assets/player_left.xpm");
 	get_img(data, &data->player_right, "./assets/player_right.xpm");
 	data->player = data->player_right;

@@ -6,32 +6,22 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:42:14 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/08/07 10:31:28 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/08/08 10:28:17 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-/*Bonus: Enemy animation*/
-
 void	counter(t_data *data, int *x, int *y)
 {
-	char	*move_count;
-	char	*str;
 
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->player.img_ptr,
-		*x * data->size, *y * data->size);
 	if (data->map.tab[*y][*x] == 'C')
 	{
 		data->map.collectibles--;
 		data->map.tab[*y][*x] = '0';
 	}
 	data->move_count++;
-	move_count = ft_itoa(data->move_count);
-	str = ft_strjoin("MOVES: ", move_count);
 	ft_printf("Moves: %d\n", data->move_count);
-	free(move_count);
-	free(str);
 	check_victory(data);
 }
 

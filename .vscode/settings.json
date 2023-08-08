@@ -14,7 +14,8 @@
         "libft.h": "c",
         "so_long.h": "c",
         "keysym.h": "c",
-        "x.h": "c"
+        "x.h": "c",
+        "so_long_bonus.h": "c"
     },
     "cmake.configureOnOpen": true
 }

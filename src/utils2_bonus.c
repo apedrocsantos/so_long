@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   utils2_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 15:41:27 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/08/08 10:12:04 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/08/08 10:09:49 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 void	free_imgs(t_data *data)
 {
@@ -26,6 +26,10 @@ void	free_imgs(t_data *data)
 		mlx_destroy_image(data->mlx_ptr, data->collectible.img_ptr);
 	if (data->exit.img_ptr)
 		mlx_destroy_image(data->mlx_ptr, data->exit.img_ptr);
+	if (data->enemy_reg.img_ptr)
+		mlx_destroy_image(data->mlx_ptr, data->enemy_reg.img_ptr);
+	if (data->enemy_inv.img_ptr)
+		mlx_destroy_image(data->mlx_ptr, data->enemy_inv.img_ptr);
 }
 
 int	close_window(t_data *data, char *error, int rtn)

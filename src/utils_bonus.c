@@ -6,11 +6,11 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 10:27:34 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/08/07 15:18:38 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/08/08 10:32:58 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 int	close_success(t_data *data)
 {
@@ -29,7 +29,8 @@ int	check_victory(void *new_data)
 			data->exit.img_ptr, data->map.exit_pos.x * data->size,
 			data->map.exit_pos.y * data->size);
 	}
-	if (data->map.tab[data->map.start.y][data->map.start.x] == 'L' || data->map.tab[data->map.start.y][data->map.start.x] == 'R')
+	if (data->map.tab[data->map.start.y][data->map.start.x] == 'L' ||
+		data->map.tab[data->map.start.y][data->map.start.x] == 'R')
 	{
 		ft_printf("You lost!\n");
 		close_window(data, NULL, 0);
@@ -37,7 +38,7 @@ int	check_victory(void *new_data)
 	if (data->map.tab[data->map.start.y][data->map.start.x] == 'E'
 		&& !data->map.collectibles)
 	{
-		ft_printf("GG!\n");
+		ft_printf("OMG YOU WON!\n");
 		close_window(data, NULL, 0);
 	}
 	return (0);

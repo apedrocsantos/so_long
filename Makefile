@@ -9,7 +9,7 @@ SRCS =	map_check.c\
 B_SRCS = map_check_bonus.c\
 		map_utils_bonus.c\
 		animation_bonus.c\
-		utils2.c\
+		utils2_bonus.c\
 		utils_bonus.c\
 		main_bonus.c\
 

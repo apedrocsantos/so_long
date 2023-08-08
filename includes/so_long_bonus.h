@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 10:28:42 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/08/08 10:29:54 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/08/08 10:11:01 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ typedef struct s_data
 	t_img			floor;
 	t_img			collectible;
 	t_img			exit;
+	t_img			enemy;
+	t_img			enemy_reg;
+	t_img			enemy_inv;
 	t_map			map;
 }					t_data;
 
@@ -79,15 +82,20 @@ int					parse_map(t_map *map, int i, int j);
 int					check_chars(t_map *map);
 void				get_start_pos_and_exit(t_map *map);
 int					flood_fill(char **tab, t_map *map, t_point cur);
+void				mega_free(t_data *data);
 int					game_init(t_data *data);
+int					handle_no_input(void *data);
 int					close_window(t_data *data, char *error, int rtn);
 int					key_func(int key, t_data *data);
+void				*put_img(t_data *data);
+void				error_end_program(t_data *data, char *msg, int rtn);
 int					close_success(t_data *data);
 void				get_img(t_data *data, t_img *img, char *str);
 void				init_imgs(t_data *data);
 void				draw_rectangle(t_data *data);
-int					check_victory(t_data *new_data);
+int					check_victory(void *new_data);
 int					animate_sprites(t_data *data);
+int					get_sprites(t_data *data);
 void				get_img(t_data *data, t_img *img, char *str);
 void				move_player(t_data *data, int x, int y);
 
