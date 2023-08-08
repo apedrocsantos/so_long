@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:42:14 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/08/08 10:28:17 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/08/08 10:44:22 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	counter(t_data *data, int *x, int *y)
 {
-
 	if (data->map.tab[*y][*x] == 'C')
 	{
 		data->map.collectibles--;

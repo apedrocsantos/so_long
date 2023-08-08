@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 10:28:42 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/08/08 10:29:54 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/08/08 13:31:20 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ typedef struct s_data
 	void			*win_ptr;
 	int				move_count;
 	int				size;
-	int				anim_speed;
-	int				anim_counter;
 	t_img			player;
 	t_img			player_left;
 	t_img			player_right;

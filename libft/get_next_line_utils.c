@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:27:12 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/07/20 12:16:54 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/08/08 13:30:17 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ size_t	ft_strlen_gnl(const char *s)
 	while (s[i])
 	{
 		if (s[i] == '\n')
-		{
-			// i++;
 			break ;
-		}
 		i++;
 	}
 	return (i);
@@ -40,7 +37,8 @@ char	*ft_strjoin_gnl(char const *s1, char const *s2)
 
 	i = 0;
 	j = 0;
-	str = (char *)malloc(sizeof(char) * (ft_strlen_gnl(s1) + ft_strlen_gnl(s2) + 1));
+	str = (char *)malloc(sizeof(char) * (ft_strlen_gnl(s1) + ft_strlen_gnl(s2)
+				+ 1));
 	if (!str)
 		return (NULL);
 	while (s1 && s1[i])
@@ -53,8 +51,6 @@ char	*ft_strjoin_gnl(char const *s1, char const *s2)
 		str[i + j] = s2[j];
 		j++;
 	}
-	// if (s2[j] == '\n')
-	// 	str[i + j++] = '\n';
 	str[i + j] = '\0';
 	free((char *)s1);
 	return (str);

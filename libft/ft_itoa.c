@@ -6,7 +6,7 @@
 /*   By: anda-cun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 16:28:41 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/04/22 23:46:48 by anda-cun         ###   ########.fr       */
+/*   Updated: 2023/08/08 13:30:32 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*ft_itoa(int n)
 	int		number;
 
 	size = nsize(n) + isneg(n);
-		str = (char *)malloc(sizeof(char) * (size + 1));
+	str = (char *)malloc(sizeof(char) * (size + 1));
 	if (!str)
 		return (NULL);
 	str[size] = '\0';
@@ -64,7 +64,8 @@ char	*ft_itoa(int n)
 }
 /*
 #include <stdio.h>
-int	main()
+
+int	main(void)
 {
 	printf("result: %s\n", ft_itoa(-2147483648));
 	//printf("result: %s\n", ft_itoa(-21474848));
