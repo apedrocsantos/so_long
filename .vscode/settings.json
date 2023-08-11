@@ -15,7 +15,9 @@
         "so_long.h": "c",
         "keysym.h": "c",
         "x.h": "c",
-        "so_long_bonus.h": "c"
+        "so_long_bonus.h": "c",
+        "type_traits": "c",
+        "new": "c"
     },
     "cmake.configureOnOpen": true
 }
